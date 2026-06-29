@@ -12,19 +12,13 @@ def create_table():
 
     conn.execute("""
     CREATE TABLE IF NOT EXISTS failures(
-
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-
         repo TEXT,
-
         workflow TEXT,
-
         status TEXT,
-
         time TEXT,
-
-        error TEXT
-
+        error TEXT,
+        run_id TEXT
     )
     """)
 
@@ -32,70 +26,54 @@ def create_table():
     conn.close()
 
 
-def insert_failure(repo, workflow, status, time, error):
+def insert_failure(repo, workflow, status, time, error, run_id):
 
     conn = get_connection()
 
     conn.execute(
         """
         INSERT INTO failures
-        (repo,workflow,status,time,error)
-
-        VALUES(?,?,?,?,?)
+        (repo, workflow, status, time, error, run_id)
+        VALUES (?, ?, ?, ?, ?, ?)
         """,
-
-        (repo, workflow, status, time, error)
-
+        (repo, workflow, status, time, error, run_id)
     )
 
     conn.commit()
-
     conn.close()
 
 
 def get_failures():
 
     conn = get_connection()
-
     cursor = conn.cursor()
 
-    cursor.execute(
-        """
-        SELECT repo,workflow,status,time,error
-
+    cursor.execute("""
+        SELECT repo, workflow, status, time, error
         FROM failures
-
         ORDER BY id DESC
-        """
-    )
+    """)
 
     rows = cursor.fetchall()
-
     conn.close()
 
     failures = []
 
     for row in rows:
-
         failures.append({
-
             "repo": row[0],
-
             "workflow": row[1],
-
             "status": row[2],
-
             "time": row[3],
-
             "error": row[4]
-
         })
 
     return failures
+
+
 def search_failures(search):
 
     conn = get_connection()
-
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -106,7 +84,6 @@ def search_failures(search):
     """, ('%' + search.lower() + '%',))
 
     rows = cursor.fetchall()
-
     conn.close()
 
     failures = []
