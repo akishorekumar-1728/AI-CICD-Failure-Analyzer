@@ -47,7 +47,10 @@ def home():
         failures=failures,
         search=search
     )
-
+@app.route("/debug")
+def debug():
+    from database import get_failures
+    return {"count": len(get_failures()), "data": get_failures()}
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
