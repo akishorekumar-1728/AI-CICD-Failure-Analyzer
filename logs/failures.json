@@ -1,0 +1,9 @@
+[
+  {
+    "repo": "AI-CICD-Failure-Analyzer",
+    "workflow": "Flask CI",
+    "status": "Failed",
+    "time": "29-Jun-2026 11:30 AM",
+    "error": "ModuleNotFoundError: No module named 'requests'"
+  }
+]

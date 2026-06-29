@@ -1,17 +1,29 @@
-<body>
+<h2>Recent Failures</h2>
 
-<h1>🤖 AI CI/CD Failure Analyzer</h1>
+{% for failure in failures %}
 
-<h2>Recent Events</h2>
+<div style="border:1px solid gray;padding:15px;margin:15px;border-radius:10px;">
 
-{% for build in builds %}
+<h3>{{ failure.repo }}</h3>
 
-<div style="background:#1e293b;padding:15px;margin:15px;border-radius:10px;">
+<p><b>Workflow:</b> {{ failure.workflow }}</p>
 
-{{ build.message }}
+<p><b>Status:</b> {{ failure.status }}</p>
 
+<p><b>Time:</b> {{ failure.time }}</p>
+
+<p><b>Error:</b></p>
+
+
+
+<pre>{{ failure.error }}</pre>
+
+
+<h4>🤖 AI Analysis</h4>
+
+<p><b>Cause:</b> {{ failure.ai.cause }}</p>
+
+<p><b>Solution:</b> {{ failure.ai.solution }}</p>
 </div>
 
 {% endfor %}
-
-</body>
