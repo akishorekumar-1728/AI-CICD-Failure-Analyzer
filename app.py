@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template, request
 from database import create_table, insert_failure, get_failures, search_failures
 from ai_helper import analyze_error
+from llm_helper import analyze_with_ai
 
 app = Flask(__name__)
 
@@ -44,7 +45,7 @@ def home():
         failures = get_failures()
 
     for failure in failures:
-        failure["ai"] = analyze_error(failure["error"])
+        failure["ai"] = analyze_with_ai(failure["error"])
 
     return render_template(
         "index.html",
