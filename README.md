@@ -1,4 +1,3 @@
-
 # 🤖 AI CI/CD Failure Analyzer
 
 A smart DevOps tool that automatically detects GitHub Actions CI/CD failures and uses AI to analyze root causes and suggest fixes.
@@ -6,6 +5,7 @@ A smart DevOps tool that automatically detects GitHub Actions CI/CD failures and
 ---
 
 ## 🚀 Live Demo
+
 https://ai-cicd-failure-analyzer.onrender.com/
 
 ---
@@ -57,19 +57,20 @@ https://ai-cicd-failure-analyzer.onrender.com/
 ## 📸 Screenshots
 
 ### 1. Dashboard Overview
+
 ![alt text](<Screenshot 2026-06-29 133526.png>)
 
-
 ### 2. AI Failure Analysis Section
+
 ![alt text](<Screenshot 2026-06-29 133552.png>) ![alt text](<Screenshot 2026-06-29 133542.png>)
 
 ### 3. GitHub Actions Page
+
 ![alt text](<Screenshot 2026-06-29 133715.png>)
 
 ### 4.Webhook Activity (GitHub Settings)
 
-![alt text](<Screenshot 2026-06-29 133655.png>)
----
+## ![alt text](<Screenshot 2026-06-29 133655.png>)
 
 ## 🧪 Example Failure Detected
 
@@ -80,6 +81,7 @@ ModuleNotFoundError: No module named 'requests'
 ```
 
 ### AI Analysis:
+
 - Missing dependency in requirements.txt
 - Fix: Add `requests` to requirements file and reinstall dependencies
 
@@ -130,4 +132,5 @@ GitHub: https://github.com/akishorekumar-1728
 ---
 
 ## ⭐ If you like this project
+
 Give a star ⭐ and feel free to contribute!
