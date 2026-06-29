@@ -1,29 +1,145 @@
-<h2>Recent Failures</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI CI/CD Failure Analyzer</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🤖 AI CI/CD Failure Analyzer</h1>
+    <form method="GET">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search Repository..."
+        value="{{ search }}">
+
+    <button type="submit">Search</button>
+
+</form>
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>Total Builds</h2>
+            <p>{{ failures|length }}</p>
+        </div>
+
+        <div class="card success">
+            <h2>Success</h2>
+
+            <p>
+                {{ failures|selectattr('status','equalto','success')|list|length }}
+            </p>
+        </div>
+
+        <div class="card failed">
+            <h2>Failed</h2>
+
+            <p>
+                {{ failures|rejectattr('status','equalto','success')|list|length }}
+            </p>
+        </div>
+
+    </div>
+
+    <h2>Recent Builds</h2>
+    <table>
+
+<tr>
+    <th>Repository</th>
+    <th>Workflow</th>
+    <th>Status</th>
+    <th>Time</th>
+</tr>
 
 {% for failure in failures %}
 
-<div style="border:1px solid gray;padding:15px;margin:15px;border-radius:10px;">
+<tr>
 
-<h3>{{ failure.repo }}</h3>
+<td>{{ failure.repo }}</td>
 
-<p><b>Workflow:</b> {{ failure.workflow }}</p>
+<td>{{ failure.workflow }}</td>
 
-<p><b>Status:</b> {{ failure.status }}</p>
+<td>
 
-<p><b>Time:</b> {{ failure.time }}</p>
+{% if failure.status=="success" %}
 
-<p><b>Error:</b></p>
+<span class="green">SUCCESS</span>
 
+{% else %}
 
+<span class="red">FAILED</span>
 
-<pre>{{ failure.error }}</pre>
+{% endif %}
 
+</td>
 
-<h4>🤖 AI Analysis</h4>
+<td>{{ failure.time }}</td>
 
-<p><b>Cause:</b> {{ failure.ai.cause }}</p>
-
-<p><b>Solution:</b> {{ failure.ai.solution }}</p>
-</div>
+</tr>
 
 {% endfor %}
+
+</table>
+
+    {% if failures %}
+
+        {% for failure in failures %}
+
+        <div class="build-card">
+
+            <h3>{{ failure.repo }}</h3>
+
+            <p><b>Workflow:</b> {{ failure.workflow }}</p>
+
+            <p><b>Status:</b>
+
+            {% if failure.status=="success" %}
+
+                <span class="green">SUCCESS</span>
+
+            {% else %}
+
+                <span class="red">FAILED</span>
+
+            {% endif %}
+
+            </p>
+
+            <p><b>Time:</b> {{ failure.time }}</p>
+
+            <p><b>Error:</b></p>
+
+            <pre>{{ failure.error }}</pre>
+
+            <div class="ai">
+
+                <h3>🤖 AI Analysis</h3>
+
+                <p><b>Cause:</b> {{ failure.ai.cause }}</p>
+
+                <p><b>Solution:</b> {{ failure.ai.solution }}</p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <h3>No builds received yet.</h3>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
